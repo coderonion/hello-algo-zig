@@ -1,0 +1,9 @@
+# MacOS Desktop Services Store
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# python files
+__pycache__
