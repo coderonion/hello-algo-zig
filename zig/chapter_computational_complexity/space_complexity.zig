@@ -1,5 +1,5 @@
 // File: space_complexity.zig
-// Created Time: 2023-01-04
+// Created Time: 2023-01-07
 // Author: sjinzh (sjinzh@gmail.com)
 
 const std = @import("std");
@@ -114,7 +114,7 @@ test "space_complexity" {
     // 平方阶
     try quadratic(n);
     _ = quadraticRecur(n);
-    // 指数阶（There exist in this code version.）
+    // 指数阶（There exist bugs in this code version.）
     // var root = buildTree(n);
     // try inc.PrintUtil.printTree(root, null, false);
 }
