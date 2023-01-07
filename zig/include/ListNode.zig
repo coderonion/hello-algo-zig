@@ -33,5 +33,4 @@ pub const ListNode = struct {
         }
         return head;
     }
-
  };

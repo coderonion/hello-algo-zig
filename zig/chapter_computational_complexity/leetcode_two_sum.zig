@@ -29,7 +29,7 @@ const SolutionHashMap = struct {
         var size: usize = nums.len;
         // 辅助哈希表，空间复杂度 O(n)
         var dic = std.AutoHashMap(i32, i32).init(std.heap.page_allocator);
-        // defer dic.deinit();
+        defer dic.deinit();
         var i: usize = 0;
         // 单层循环，时间复杂度 O(n)
         while (i < size) : (i += 1) {
