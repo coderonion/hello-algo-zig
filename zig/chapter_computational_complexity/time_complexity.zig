@@ -138,10 +138,10 @@ fn factorialRecur(n: i32) i32 {
 }
 
 // Driver Code
-test "time_complexity" {
+pub fn main() void {
     // 可以修改 n 运行，体会一下各种复杂度的操作数量变化趋势
     const n: i32 = 8;
-    std.debug.print("\n输入数据大小 n = {}\n", .{n});
+    std.debug.print("输入数据大小 n = {}\n", .{n});
 
     var count = constant(n);
     std.debug.print("常数阶的计算操作数量 = {}\n", .{count});

@@ -27,7 +27,7 @@ pub fn findOne(nums: []i32) i32 {
 }
 
 // Driver Code
-test "worst_best_time_complexity" {
+pub fn main() void {
     var i: i32 = 0;
     while (i < 10) : (i += 1) {
         const n: usize = 100;
@@ -35,7 +35,7 @@ test "worst_best_time_complexity" {
         var index = findOne(&nums);
         std.debug.print("\n数组 [ 1, 2, ..., n ] 被打乱后 = ", .{});
         inc.PrintUtil.printArray(i32, &nums);
-        std.debug.print("\n数字 1 的索引为 {}\n", .{index});
+        std.debug.print("数字 1 的索引为 {}\n", .{index});
     }
 }
 

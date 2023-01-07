@@ -8,10 +8,9 @@ const TreeNode = @import("TreeNode.zig").TreeNode;
 // Print an Array
 pub fn printArray(comptime T: type, nums: []T) void {
     std.debug.print("[", .{});
-     for (nums) |num, j| {
-        std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]" else ", " });
+    for (nums) |num, j| {
+        std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]\n" else ", " });
      }
-
 }
 
 // This tree printer is borrowed from TECHIE DELIGHT
