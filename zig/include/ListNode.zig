@@ -7,9 +7,10 @@ const std = @import("std");
 // Definition for a singly-linked list node
 pub fn ListNode(comptime T: type) type {
     return struct {
+        const Self = @This();
+        
         val: T = 0,
         next: ?*Self = null,
-        const Self = @This();
 
         // Initialize a list node with specific value
         pub fn init(self: *Self, x: i32) void {

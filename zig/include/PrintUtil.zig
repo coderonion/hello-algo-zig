@@ -51,15 +51,12 @@ pub fn printLinkedList(node: ?*ListNode(i32)) !void {
 // This tree printer is borrowed from TECHIE DELIGHT
 // https://www.techiedelight.com/c-program-print-binary-tree/
 const Trunk = struct {
-    prev: ?*Trunk,
-    str: []const u8,
+    prev: ?*Trunk = null,
+    str: []const u8 = undefined,
     
-    pub fn init(_prev: ?*Trunk, _str: []const u8) ?*Trunk {
-        std.debug.print("\n_str = {s}\n", .{_str});
-        return &Trunk {
-            .prev = _prev,
-            .str = _str,
-        };
+    pub fn init(self: *Trunk, prev: ?*Trunk, str: []const u8) void {
+        self.prev = prev;
+        self.str = str;
     }
 };
 
@@ -72,34 +69,34 @@ pub fn showTrunks(p: ?*Trunk) void {
 
 // The interface of the tree printer
 // Print a binary tree
-pub fn printTree(root: ?*TreeNode, prev: ?*Trunk, isLeft: bool) !void {
+pub fn printTree(root: ?*TreeNode(i32), prev: ?*Trunk, isLeft: bool) !void {
     if (root == null) {
         return;
     }
 
     var prev_str = "    ";
-    var trunk = Trunk.init(prev, prev_str);
+    var trunk = Trunk{.prev = prev, .str = prev_str};
 
-    try printTree(root.?.right, trunk, true);
+    try printTree(root.?.right, &trunk, true);
    
     if (prev == null) {
-        trunk.?.str = "———";
+        trunk.str = "———";
     } else if (isLeft) {
-        trunk.?.str = "/———";
+        trunk.str = "/———";
         prev_str = "   |";
     } else {
-        trunk.?.str = "\\———";
+        trunk.str = "\\———";
         prev.?.str = prev_str;
     }
 
-    showTrunks(trunk);
-    std.debug.print(" {}", .{root.?.val});
+    showTrunks(&trunk);
+    std.debug.print(" {}\n", .{root.?.val});
 
     if (prev) |_| {
         prev.?.str = prev_str;
     }
-    trunk.?.str = "   |";
+    trunk.str = "   |";
 
-    try printTree(root.?.left, trunk, false);
+    try printTree(root.?.left, &trunk, false);
 }
 

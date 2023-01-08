@@ -37,13 +37,17 @@ pub fn build(b: *std.build.Builder) void {
         run_step_worst_best_time_complexity.dependOn(&run_cmd_worst_best_time_complexity.step);
 
         // "space_complexity.zig"
-        // Test Command: zig build test_space_complexity
-        const test_space_complexity = b.addTest("chapter_computational_complexity/space_complexity.zig");
-        test_space_complexity.addPackagePath("include", "include/include.zig");
-        test_space_complexity.setTarget(target);
-        test_space_complexity.setBuildMode(mode);
-        const test_step_space_complexity = b.step("test_space_complexity", "Test space_complexity");
-        test_step_space_complexity.dependOn(&test_space_complexity.step);
+        // Run Command: zig build run_space_complexity
+        const exe_space_complexity = b.addExecutable("space_complexity", "chapter_computational_complexity/space_complexity.zig");
+        exe_space_complexity.addPackagePath("include", "include/include.zig");
+        exe_space_complexity.setTarget(target);
+        exe_space_complexity.setBuildMode(mode);
+        exe_space_complexity.install();
+        const run_cmd_space_complexity = exe_space_complexity.run();
+        run_cmd_space_complexity.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_space_complexity.addArgs(args);
+        const run_step_space_complexity = b.step("run_space_complexity", "Run space_complexity");
+        run_step_space_complexity.dependOn(&run_cmd_space_complexity.step);
 
         // "leetcode_two_sum.zig"
         // Run Command: zig build run_leetcode_two_sum

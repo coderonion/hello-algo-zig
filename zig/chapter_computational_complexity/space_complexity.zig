@@ -17,7 +17,7 @@ fn constant(n: i32) void {
     const a: i32 = 0;
     var b: i32 = 0;
     var nums = [_]i32{0}**10000;
-    var node = inc.ListNode.init(0);
+    var node = inc.ListNode(i32){.val = 0};
     var i: i32 = 0;
     // 循环中的变量占用 O(1) 空间
     while (i < n) : (i += 1) {
@@ -40,21 +40,19 @@ fn linear(comptime n: i32) !void {
     // 长度为 n 的数组占用 O(n) 空间
     var nums = [_]i32{0}**n;
     // 长度为 n 的列表占用 O(n) 空间
-    var nodes = std.ArrayList(i32).init(std.testing.allocator);
-    // ???
+    var nodes = std.ArrayList(i32).init(std.heap.page_allocator);
     defer nodes.deinit();
     var i: i32 = 0;
     while (i < n) : (i += 1) {
         try nodes.append(i);
     }
     // 长度为 n 的哈希表占用 O(n) 空间
-    var map = std.AutoArrayHashMap(i32, []const u8).init(std.testing.allocator);
-    // ???
+    var map = std.AutoArrayHashMap(i32, []const u8).init(std.heap.page_allocator);
     defer map.deinit();
     var j: i32 = 0;
     while (j < n) : (j += 1) {
-        const string = try std.fmt.allocPrint(std.testing.allocator,"{d}",.{j});
-        defer std.testing.allocator.free(string);
+        const string = try std.fmt.allocPrint(std.heap.page_allocator, "{d}", .{j});
+        defer std.heap.page_allocator.free(string);
         try map.put(i, string);
     }
     _ = nums;
@@ -62,7 +60,7 @@ fn linear(comptime n: i32) !void {
 
 // 线性阶（递归实现）
 fn linearRecur(comptime n: i32) void {
-    std.debug.print("\n递归 n = {}", .{n});
+    std.debug.print("递归 n = {}\n", .{n});
     if (n == 1) return;
     linearRecur(n - 1);
 }
@@ -70,13 +68,11 @@ fn linearRecur(comptime n: i32) void {
 // 平方阶
 fn quadratic(n: i32) !void {
     // 二维列表占用 O(n^2) 空间
-    var nodes = std.ArrayList(std.ArrayList(i32)).init(std.testing.allocator);
-    // ???
+    var nodes = std.ArrayList(std.ArrayList(i32)).init(std.heap.page_allocator);
     defer nodes.deinit();
     var i: i32 = 0;
     while (i < n) : (i += 1) {
-        var tmp = std.ArrayList(i32).init(std.testing.allocator);
-        // ???
+        var tmp = std.ArrayList(i32).init(std.heap.page_allocator);
         defer tmp.deinit();
         var j: i32 = 0;
         while (j < n) : (j += 1) {
@@ -90,21 +86,22 @@ fn quadratic(n: i32) !void {
 fn quadraticRecur(comptime n: i32) i32 {
     if (n <= 0) return 0;
     var nums = [_]i32{0}**n;
-    std.debug.print("\n递归 n = {} 中的 nums 长度 = {}", .{n, nums.len});
+    std.debug.print("递归 n = {} 中的 nums 长度 = {}\n", .{n, nums.len});
     return quadraticRecur(n - 1);
 }
 
 // 指数阶（建立满二叉树）
-fn buildTree(n: i32) ?*inc.TreeNode {
+fn buildTree(mem_allocator: std.mem.Allocator, n: i32) !?*inc.TreeNode(i32) {
     if (n == 0) return null;
-    var root = inc.TreeNode.init(0);
-    root.?.left = buildTree(n - 1);
-    root.?.right = buildTree(n - 1);
+    const root = try mem_allocator.create(inc.TreeNode(i32));
+    root.init(0);
+    root.left = try buildTree(mem_allocator, n - 1);
+    root.right = try buildTree(mem_allocator, n - 1);
     return root;
 }
 
 // Driver Code
-test "space_complexity" {
+pub fn main() !void {
     const n: i32 = 5;
     // 常数阶
     constant(n);
@@ -114,9 +111,14 @@ test "space_complexity" {
     // 平方阶
     try quadratic(n);
     _ = quadraticRecur(n);
-    // 指数阶（There exist bugs in this code version.）
-    // var root = buildTree(n);
-    // try inc.PrintUtil.printTree(root, null, false);
+    // 指数阶
+    var mem_arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer mem_arena.deinit();
+    var root = blk_root: {
+        const mem_allocator = mem_arena.allocator();
+        break :blk_root try buildTree(mem_allocator, n);
+    };
+    try inc.PrintUtil.printTree(root, null, false);
 
     const getchar = try std.io.getStdIn().reader().readByte();
     _ = getchar;
