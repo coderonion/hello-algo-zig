@@ -105,6 +105,9 @@ pub fn main() !void {
 
     // 查找元素
     var index = find(&nums_ext, 3);
-    std.debug.print("在 nums_ext 中查找元素 3 ，得到索引 = {}", .{index});
+    std.debug.print("在 nums_ext 中查找元素 3 ，得到索引 = {}\n", .{index});
+
+    const getchar = try std.io.getStdIn().reader().readByte();
+    _ = getchar;
 }
 

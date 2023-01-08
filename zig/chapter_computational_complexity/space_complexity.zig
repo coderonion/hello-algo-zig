@@ -117,4 +117,7 @@ test "space_complexity" {
     // 指数阶（There exist bugs in this code version.）
     // var root = buildTree(n);
     // try inc.PrintUtil.printTree(root, null, false);
+
+    const getchar = try std.io.getStdIn().reader().readByte();
+    _ = getchar;
 }

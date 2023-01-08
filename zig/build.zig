@@ -1,3 +1,7 @@
+// File: build.zig
+// Created Time: 2023-01-07
+// Author: sjinzh (sjinzh@gmail.com)
+
 const std = @import("std");
 
 // zig version 0.10.0
@@ -80,4 +84,17 @@ pub fn build(b: *std.build.Builder) void {
         if (b.args) |args| run_cmd_linked_list.addArgs(args);
         const run_step_linked_list = b.step("run_linked_list", "Run linked_list");
         run_step_linked_list.dependOn(&run_cmd_linked_list.step);
+
+        // "list.zig"
+        // Run Command: zig build run_list
+        const exe_list = b.addExecutable("list", "chapter_array_and_linkedlist/list.zig");
+        exe_list.addPackagePath("include", "include/include.zig");
+        exe_list.setTarget(target);
+        exe_list.setBuildMode(mode);
+        exe_list.install();
+        const run_cmd_list = exe_list.run();
+        run_cmd_list.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_list.addArgs(args);
+        const run_step_list = b.step("run_list", "Run list");
+        run_step_list.dependOn(&run_cmd_list.step);
 }

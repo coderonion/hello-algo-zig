@@ -6,12 +6,31 @@ const std = @import("std");
 const ListNode = @import("ListNode.zig").ListNode;
 const TreeNode = @import("TreeNode.zig").TreeNode;
 
-// Print an Array
+// Print an array
 pub fn printArray(comptime T: type, nums: []T) void {
     std.debug.print("[", .{});
-    for (nums) |num, j| {
-        std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]\n" else ", " });
-     }
+    if (nums.len > 0) {
+        for (nums) |num, j| {
+            std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]\n" else ", " });
+        }
+    } else {
+        std.debug.print("]", .{});
+        std.debug.print("\n", .{});
+    }
+}
+
+// Print a list
+pub fn printList(list: std.ArrayList(i32)) void {
+    std.debug.print("[", .{});
+    if (list.items.len > 0) {
+        for (list.items) |value, i| {
+            std.debug.print("{}{s}", .{value, if (i == list.items.len-1) "]\n" else ", " });
+        }
+    } else {
+        std.debug.print("]", .{});
+        std.debug.print("\n", .{}); 
+    }
+    
 }
 
 // Print a linked list

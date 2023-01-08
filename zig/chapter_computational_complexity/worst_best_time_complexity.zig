@@ -27,7 +27,7 @@ pub fn findOne(nums: []i32) i32 {
 }
 
 // Driver Code
-pub fn main() void {
+pub fn main() !void {
     var i: i32 = 0;
     while (i < 10) : (i += 1) {
         const n: usize = 100;
@@ -37,5 +37,8 @@ pub fn main() void {
         inc.PrintUtil.printArray(i32, &nums);
         std.debug.print("数字 1 的索引为 {}\n", .{index});
     }
+
+    const getchar = try std.io.getStdIn().reader().readByte();
+    _ = getchar;
 }
 
