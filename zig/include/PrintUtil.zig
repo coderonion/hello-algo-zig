@@ -3,6 +3,7 @@
 // Author: sjinzh (sjinzh@gmail.com)
 
 const std = @import("std");
+const ListNode = @import("ListNode.zig").ListNode;
 const TreeNode = @import("TreeNode.zig").TreeNode;
 
 // Print an Array
@@ -11,6 +12,21 @@ pub fn printArray(comptime T: type, nums: []T) void {
     for (nums) |num, j| {
         std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]\n" else ", " });
      }
+}
+
+// Print a linked list
+pub fn printLinkedList(node: ?*ListNode(i32)) !void {
+    if (node == null) return;
+    var list = std.ArrayList(i32).init(std.heap.page_allocator);
+    defer list.deinit();
+    var head = node;
+    while (head != null) {
+        try list.append(head.?.val);
+        head = head.?.next;
+    }
+    for (list.items) |value, i| {
+        std.debug.print("{}{s}", .{value, if (i == list.items.len-1) "\n" else "->" });
+    }
 }
 
 // This tree printer is borrowed from TECHIE DELIGHT

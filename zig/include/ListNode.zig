@@ -2,35 +2,37 @@
 // Created Time: 2023-01-04
 // Author: sjinzh (sjinzh@gmail.com)
 
+const std = @import("std");
+
 // Definition for a singly-linked list node
-pub const ListNode = struct {
-    val: i32,
-    next: ?*ListNode,
+pub fn ListNode(comptime T: type) type {
+    return struct {
+        val: T = 0,
+        next: ?*Self = null,
+        const Self = @This();
 
-    // Initialize a list node with specific value
-    pub fn init(x: i32) ?*ListNode {
-        return &ListNode {
-            .val = x,
-            .next = null,
-        };
-    }
-
-    // Generate a linked list with an array
-    pub fn arrToLinkedList(arr: []i32) ?*ListNode {
-        var dum = ListNode.init(0);
-        var head = dum;
-        for (arr) |val| {
-            head.next = ListNode.init(val);
-            head = head.next;
+        // Initialize a list node with specific value
+        pub fn init(self: *Self, x: i32) void {
+            self.val = x;
         }
-        return dum.next;
-    }
 
-    // Get a list node with specific value from a linked list
-    pub fn getListNode(head: ?ListNode, val: i32) ?*ListNode {
-        while (head != null and head.?.val != val) {
-            head = head.next;
+        // Generate a linked list with an array
+        pub fn arrToLinkedList(arr: []i32) ?*Self {
+            var dum = Self.init(0);
+            var head = dum;
+            for (arr) |val| {
+                head.next = Self.init(val);
+                head = head.next;
+            }
+            return dum.next;
         }
-        return head;
-    }
- };
+
+        // Get a list node with specific value from a linked list
+        pub fn getListNode(head: ?Self, val: i32) ?*Self {
+            while (head != null and head.?.val != val) {
+                head = head.next;
+            }
+            return head;
+        }
+    };
+}

@@ -65,6 +65,19 @@ pub fn build(b: *std.build.Builder) void {
         const run_cmd_array = exe_array.run();
         run_cmd_array.step.dependOn(b.getInstallStep());
         if (b.args) |args| run_cmd_array.addArgs(args);
-        const run_step_run_cmd_array = b.step("run_array", "Run array");
-        run_step_run_cmd_array.dependOn(&run_cmd_array.step);
+        const run_step_array = b.step("run_array", "Run array");
+        run_step_array.dependOn(&run_cmd_array.step);
+
+        // "linked_list.zig"
+        // Run Command: zig build run_linked_list
+        const exe_linked_list = b.addExecutable("linked_list", "chapter_array_and_linkedlist/linked_list.zig");
+        exe_linked_list.addPackagePath("include", "include/include.zig");
+        exe_linked_list.setTarget(target);
+        exe_linked_list.setBuildMode(mode);
+        exe_linked_list.install();
+        const run_cmd_linked_list = exe_linked_list.run();
+        run_cmd_linked_list.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_linked_list.addArgs(args);
+        const run_step_linked_list = b.step("run_linked_list", "Run linked_list");
+        run_step_linked_list.dependOn(&run_cmd_linked_list.step);
 }
