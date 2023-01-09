@@ -131,6 +131,8 @@ pub fn main() !void {
     // 初始化列表
     var list = MyList(i32){};
     try list.init();
+    // 延迟释放内存
+    defer list.deinit();
 
     // 尾部添加元素
     try list.add(1);

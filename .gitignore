@@ -4,11 +4,3 @@
 # Editor
 .vscode/
 .idea/
-
-# python files
-__pycache__
-
-# zig files
-zig/zig-cache
-zig/zig-out
-
