@@ -4,13 +4,14 @@
 
 const std = @import("std");
 
-// zig version 0.10.0
+// Zig Version: 0.10.0
+// Zig Codes Build Command: zig build
 pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});
     const mode = b.standardReleaseOptions();
 
-    // "chapter_computational_complexity"
-        // "time_complexity.zig"
+    // Section: "Time Complexity"
+        // Source File: "chapter_computational_complexity/time_complexity.zig"
         // Run Command: zig build run_time_complexity
         const exe_time_complexity = b.addExecutable("time_complexity", "chapter_computational_complexity/time_complexity.zig");
         exe_time_complexity.addPackagePath("include", "include/include.zig");
@@ -23,7 +24,7 @@ pub fn build(b: *std.build.Builder) void {
         const run_step_time_complexity = b.step("run_time_complexity", "Run time_complexity");
         run_step_time_complexity.dependOn(&run_cmd_time_complexity.step);
 
-        // "worst_best_time_complexity.zig"
+        // Source File: "chapter_computational_complexity/worst_best_time_complexity.zig"
         // Run Command: zig build run_worst_best_time_complexity
         const exe_worst_best_time_complexity = b.addExecutable("worst_best_time_complexity", "chapter_computational_complexity/worst_best_time_complexity.zig");
         exe_worst_best_time_complexity.addPackagePath("include", "include/include.zig");
@@ -36,7 +37,8 @@ pub fn build(b: *std.build.Builder) void {
         const run_step_worst_best_time_complexity = b.step("run_worst_best_time_complexity", "Run worst_best_time_complexity");
         run_step_worst_best_time_complexity.dependOn(&run_cmd_worst_best_time_complexity.step);
 
-        // "space_complexity.zig"
+    // Section: "Space Complexity"
+        // Source File: "chapter_computational_complexity/space_complexity.zig"
         // Run Command: zig build run_space_complexity
         const exe_space_complexity = b.addExecutable("space_complexity", "chapter_computational_complexity/space_complexity.zig");
         exe_space_complexity.addPackagePath("include", "include/include.zig");
@@ -49,7 +51,8 @@ pub fn build(b: *std.build.Builder) void {
         const run_step_space_complexity = b.step("run_space_complexity", "Run space_complexity");
         run_step_space_complexity.dependOn(&run_cmd_space_complexity.step);
 
-        // "leetcode_two_sum.zig"
+    // Section: "Space Time Tradeoff"
+        // Source File: "chapter_computational_complexity/leetcode_two_sum.zig"
         // Run Command: zig build run_leetcode_two_sum
         const exe_leetcode_two_sum = b.addExecutable("leetcode_two_sum", "chapter_computational_complexity/leetcode_two_sum.zig");
         exe_leetcode_two_sum.addPackagePath("include", "include/include.zig");
@@ -62,8 +65,8 @@ pub fn build(b: *std.build.Builder) void {
         const run_step_leetcode_two_sum = b.step("run_leetcode_two_sum", "Run leetcode_two_sum");
         run_step_leetcode_two_sum.dependOn(&run_cmd_leetcode_two_sum.step);
 
-    // "chapter_array_and_linkedlist"
-        // "array.zig"
+    // Section: "Array"
+        // Source File: "chapter_array_and_linkedlist/array.zig"
         // Run Command: zig build run_array
         const exe_array = b.addExecutable("array", "chapter_array_and_linkedlist/array.zig");
         exe_array.addPackagePath("include", "include/include.zig");
@@ -76,7 +79,8 @@ pub fn build(b: *std.build.Builder) void {
         const run_step_array = b.step("run_array", "Run array");
         run_step_array.dependOn(&run_cmd_array.step);
 
-        // "linked_list.zig"
+    // Section: "LinkedList"
+        // Source File: "chapter_array_and_linkedlist/linked_list.zig"
         // Run Command: zig build run_linked_list
         const exe_linked_list = b.addExecutable("linked_list", "chapter_array_and_linkedlist/linked_list.zig");
         exe_linked_list.addPackagePath("include", "include/include.zig");
@@ -89,7 +93,8 @@ pub fn build(b: *std.build.Builder) void {
         const run_step_linked_list = b.step("run_linked_list", "Run linked_list");
         run_step_linked_list.dependOn(&run_cmd_linked_list.step);
 
-        // "list.zig"
+    // Section: "List"
+        // Source File: "chapter_array_and_linkedlist/list.zig"
         // Run Command: zig build run_list
         const exe_list = b.addExecutable("list", "chapter_array_and_linkedlist/list.zig");
         exe_list.addPackagePath("include", "include/include.zig");
@@ -101,4 +106,17 @@ pub fn build(b: *std.build.Builder) void {
         if (b.args) |args| run_cmd_list.addArgs(args);
         const run_step_list = b.step("run_list", "Run list");
         run_step_list.dependOn(&run_cmd_list.step);
+
+        // Source File: "chapter_array_and_linkedlist/my_list.zig"
+        // Run Command: zig build run_my_list
+        const exe_my_list = b.addExecutable("my_list", "chapter_array_and_linkedlist/my_list.zig");
+        exe_my_list.addPackagePath("include", "include/include.zig");
+        exe_my_list.setTarget(target);
+        exe_my_list.setBuildMode(mode);
+        exe_my_list.install();
+        const run_cmd_my_list = exe_my_list.run();
+        run_cmd_my_list.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_my_list.addArgs(args);
+        const run_step_my_list = b.step("run_my_list", "Run my_list");
+        run_step_my_list.dependOn(&run_cmd_my_list.step);
 }

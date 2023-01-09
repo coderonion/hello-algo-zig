@@ -55,7 +55,7 @@ pub fn main() !void {
     // 方法二
     var slt2 = SolutionHashMap{};
     res = try slt2.twoSum(&nums, target);
-    std.debug.print("方法二 res = ", .{});
+    std.debug.print("\n方法二 res = ", .{});
     inc.PrintUtil.printArray(i32, &res); 
     
     const getchar = try std.io.getStdIn().reader().readByte();

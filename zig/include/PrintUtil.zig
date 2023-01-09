@@ -1,4 +1,4 @@
-// File: TreeNode.zig
+// File: PrintUtil.zig
 // Created Time: 2023-01-07
 // Author: sjinzh (sjinzh@gmail.com)
 
@@ -7,15 +7,15 @@ const ListNode = @import("ListNode.zig").ListNode;
 const TreeNode = @import("TreeNode.zig").TreeNode;
 
 // Print an array
+// 编译时泛型
 pub fn printArray(comptime T: type, nums: []T) void {
     std.debug.print("[", .{});
     if (nums.len > 0) {
         for (nums) |num, j| {
-            std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]\n" else ", " });
+            std.debug.print("{}{s}", .{num, if (j == nums.len-1) "]" else ", " });
         }
     } else {
         std.debug.print("]", .{});
-        std.debug.print("\n", .{});
     }
 }
 
@@ -24,11 +24,10 @@ pub fn printList(list: std.ArrayList(i32)) void {
     std.debug.print("[", .{});
     if (list.items.len > 0) {
         for (list.items) |value, i| {
-            std.debug.print("{}{s}", .{value, if (i == list.items.len-1) "]\n" else ", " });
+            std.debug.print("{}{s}", .{value, if (i == list.items.len-1) "]" else ", " });
         }
     } else {
         std.debug.print("]", .{});
-        std.debug.print("\n", .{}); 
     }
     
 }

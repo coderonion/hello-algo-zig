@@ -35,7 +35,7 @@ pub fn main() !void {
         var index = findOne(&nums);
         std.debug.print("\n数组 [ 1, 2, ..., n ] 被打乱后 = ", .{});
         inc.PrintUtil.printArray(i32, &nums);
-        std.debug.print("数字 1 的索引为 {}\n", .{index});
+        std.debug.print("\n数字 1 的索引为 {}\n", .{index});
     }
 
     const getchar = try std.io.getStdIn().reader().readByte();

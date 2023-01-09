@@ -17,16 +17,16 @@ pub fn main() !void {
 
     // 访问元素
     var num = list.items[1];
-    std.debug.print("访问索引 1 处的元素，得到 num = {}\n", .{num});
+    std.debug.print("\n访问索引 1 处的元素，得到 num = {}", .{num});
 
     // 更新元素
     list.items[1] = 0;
-    std.debug.print("将索引 1 处的元素更新为 0 ，得到 list = ", .{});
+    std.debug.print("\n将索引 1 处的元素更新为 0 ，得到 list = ", .{});
     inc.PrintUtil.printList(list);
 
     // 清空列表
     list.clearRetainingCapacity();
-    std.debug.print("清空列表后 list = ", .{});
+    std.debug.print("\n清空列表后 list = ", .{});
     inc.PrintUtil.printList(list);
 
     // 尾部添加元素
@@ -35,18 +35,18 @@ pub fn main() !void {
     try list.append(2);
     try list.append(5);
     try list.append(4);
-    std.debug.print("添加元素后 list = ", .{});
+    std.debug.print("\n添加元素后 list = ", .{});
     inc.PrintUtil.printList(list);
 
     // 中间插入元素
     try list.insert(3, 6);
-    std.debug.print("在索引 3 处插入数字 6 ，得到 list = ", .{});
+    std.debug.print("\n在索引 3 处插入数字 6 ，得到 list = ", .{});
     inc.PrintUtil.printList(list);
 
     // 删除元素
     var value = list.orderedRemove(3);
     _ = value;
-    std.debug.print("删除索引 3 处的元素，得到 list = ", .{});
+    std.debug.print("\n删除索引 3 处的元素，得到 list = ", .{});
     inc.PrintUtil.printList(list);
 
     // 通过索引遍历列表
@@ -67,12 +67,12 @@ pub fn main() !void {
     defer list1.deinit();
     try list1.appendSlice(&[_]i32{ 6, 8, 7, 10, 9 });
     try list.insertSlice(list.items.len, list1.items);
-    std.debug.print("将列表 list1 拼接到 list 之后，得到 list = ", .{});
+    std.debug.print("\n将列表 list1 拼接到 list 之后，得到 list = ", .{});
     inc.PrintUtil.printList(list);
 
     // 排序列表
     std.sort.sort(i32, list.items, {}, comptime std.sort.asc(i32));
-    std.debug.print("排序列表后 list = ", .{});
+    std.debug.print("\n排序列表后 list = ", .{});
     inc.PrintUtil.printList(list);
 
     const getchar = try std.io.getStdIn().reader().readByte();
