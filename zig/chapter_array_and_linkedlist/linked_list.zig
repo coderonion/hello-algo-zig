@@ -46,6 +46,10 @@ pub fn find(node: ?*inc.ListNode(i32), target: i32) i32 {
 
 // Driver Code
 pub fn main() !void {
+    // 查看本地CPU架构和操作系统信息
+    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
+    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
+
     // 初始化链表
     // 初始化各个结点 
     var n0 = inc.ListNode(i32){.val = 1};
@@ -83,4 +87,3 @@ pub fn main() !void {
     const getchar = try std.io.getStdIn().reader().readByte();
     _ = getchar;
 }
-

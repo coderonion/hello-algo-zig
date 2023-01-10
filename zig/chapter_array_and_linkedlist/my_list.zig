@@ -6,7 +6,7 @@ const std = @import("std");
 const inc = @import("include");
 
 // 列表类简易实现
-// 编译时泛型
+// 编译期泛型
 pub fn MyList(comptime T: type) type {
     return struct {
         const Self = @This();
@@ -19,9 +19,9 @@ pub fn MyList(comptime T: type) type {
         mem_allocator: std.mem.Allocator = undefined,   // 内存分配器
 
         // 构造函数（分配内存+初始化列表）
-        pub fn init(self: *Self) !void {
+        pub fn init(self: *Self, allocator: std.mem.Allocator) !void {
             if (self.mem_arena == null) {
-                self.mem_arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+                self.mem_arena = std.heap.ArenaAllocator.init(allocator);
                 self.mem_allocator = self.mem_arena.?.allocator();
             }
             self.nums = try self.mem_allocator.alloc(T, self.numsCapacity);
@@ -104,9 +104,7 @@ pub fn MyList(comptime T: type) type {
             var extend = try self.mem_allocator.alloc(T, newCapacity);
             std.mem.set(T, extend, 0);
             // 将原数组中的所有元素复制到新数组
-            for (self.nums) |num, i| {
-                extend[i] = num;
-            }
+            std.mem.copy(T, extend, self.nums);
             self.nums = extend;
             // 更新列表容量
             self.numsCapacity = newCapacity;
@@ -128,9 +126,13 @@ pub fn MyList(comptime T: type) type {
 
 // Driver Code
 pub fn main() !void {
+    // 查看本地CPU架构和操作系统信息
+    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
+    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
+
     // 初始化列表
     var list = MyList(i32){};
-    try list.init();
+    try list.init(std.heap.page_allocator);
     // 延迟释放内存
     defer list.deinit();
 

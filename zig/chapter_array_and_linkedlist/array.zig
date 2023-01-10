@@ -20,14 +20,12 @@ pub fn extend(mem_allocator: std.mem.Allocator, nums: []i32, enlarge: usize) ![]
     var res = try mem_allocator.alloc(i32, nums.len + enlarge);
     std.mem.set(i32, res, 0);
     // 将原数组中的所有元素复制到新数组
-    for (nums) |num, i| {
-        res[i] = num;
-    }
+    std.mem.copy(i32, res, nums);
     // 返回扩展后的新数组
     return res;
 }
 
-// 扩展数组长度（编译时方法A：初始化新数组并进行元素拷贝）
+// 扩展数组长度（编译期方法A：初始化新数组并进行元素拷贝）
 pub fn extendComptimeA(comptime nums: anytype, comptime enlarge: i32) [nums.len + enlarge]i32 {
     // 初始化一个扩展长度后的数组
     var res = [_]i32{0} ** (nums.len + enlarge);
@@ -39,7 +37,7 @@ pub fn extendComptimeA(comptime nums: anytype, comptime enlarge: i32) [nums.len 
     return res;
 }
 
-// 扩展数组长度（编译时方法B: 通过数组拼接运算符“++”）
+// 扩展数组长度（编译期方法B: 通过数组拼接运算符“++”）
 pub fn extendComptimeB(comptime nums: anytype, comptime enlarge: i32) [nums.len + enlarge]i32 {
     // 数组拼接操作
     var res = nums ++ [_]i32{0} ** enlarge;
@@ -92,6 +90,10 @@ pub fn find(nums: []i32, target: i32) i32 {
 
 // Driver Code
 pub fn main() !void {
+    // 查看本地CPU架构和操作系统信息
+    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
+    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
+
     // 初始化数组
     const size: i32 = 5;
     var arr = [_]i32{0} ** size;
@@ -116,7 +118,7 @@ pub fn main() !void {
     std.debug.print("\n将数组长度扩展至 8 ，得到 nums = ", .{});
     inc.PrintUtil.printArray(i32, nums);
     // {
-    //     // 长度扩展（编译时方法）
+    //     // 长度扩展（编译期方法）
     //     comptime var array_comptime = [_]i32{ 1, 3, 2, 5, 4 };
     //     var nums_comptime = extendComptimeA(array_comptime, 3);
     //     // var nums_comptime = extendComptimeB(array_comptime, 3);

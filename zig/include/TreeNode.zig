@@ -5,7 +5,7 @@
 const std = @import("std");
 
 // Definition for a binary tree node
-// 编译时泛型
+// 编译期泛型
 pub fn TreeNode(comptime T: type) type {
     return struct {
         const Self = @This();
