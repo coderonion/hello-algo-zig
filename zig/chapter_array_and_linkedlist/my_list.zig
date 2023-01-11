@@ -102,7 +102,7 @@ pub fn MyList(comptime T: type) type {
             // 新建一个长度为 size * extendRatio 的数组，并将原数组拷贝到新数组
             var newCapacity = self.capacity() * self.extendRatio;
             var extend = try self.mem_allocator.alloc(T, newCapacity);
-            std.mem.set(T, extend, 0);
+            std.mem.set(T, extend, @as(T, 0));
             // 将原数组中的所有元素复制到新数组
             std.mem.copy(T, extend, self.nums);
             self.nums = extend;
@@ -114,13 +114,12 @@ pub fn MyList(comptime T: type) type {
         pub fn toArray(self: *Self) ![]T {
             // 仅转换有效长度范围内的列表元素
             var nums = try self.mem_allocator.alloc(T, self.size());
-            std.mem.set(T, nums, 0);
+            std.mem.set(T, nums, @as(T, 0));
             for (nums) |*num, i| {
                 num.* = self.get(i);
             }
             return nums;
         }
-
     };
 }
 

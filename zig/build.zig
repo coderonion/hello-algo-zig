@@ -119,4 +119,44 @@ pub fn build(b: *std.build.Builder) void {
         if (b.args) |args| run_cmd_my_list.addArgs(args);
         const run_step_my_list = b.step("run_my_list", "Run my_list");
         run_step_my_list.dependOn(&run_cmd_my_list.step);
+
+    // Section: "Stack"
+        // Source File: "chapter_stack_and_queue/stack.zig"
+        // Run Command: zig build run_stack
+        const exe_stack = b.addExecutable("list", "chapter_stack_and_queue/stack.zig");
+        exe_stack.addPackagePath("include", "include/include.zig");
+        exe_stack.setTarget(target);
+        exe_stack.setBuildMode(mode);
+        exe_stack.install();
+        const run_cmd_stack = exe_stack.run();
+        run_cmd_stack.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_stack.addArgs(args);
+        const run_step_stack = b.step("run_stack", "Run stack");
+        run_step_stack.dependOn(&run_cmd_stack.step);
+
+        // Source File: "chapter_stack_and_queue/linkedlist_stack.zig"
+        // Run Command: zig build run_linkedlist_stack
+        const exe_linkedlist_stack = b.addExecutable("list", "chapter_stack_and_queue/linkedlist_stack.zig");
+        exe_linkedlist_stack.addPackagePath("include", "include/include.zig");
+        exe_linkedlist_stack.setTarget(target);
+        exe_linkedlist_stack.setBuildMode(mode);
+        exe_linkedlist_stack.install();
+        const run_cmd_linkedlist_stack = exe_linkedlist_stack.run();
+        run_cmd_linkedlist_stack.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_linkedlist_stack.addArgs(args);
+        const run_step_linkedlist_stack = b.step("run_linkedlist_stack", "Run linkedlist_stack");
+        run_step_linkedlist_stack.dependOn(&run_cmd_linkedlist_stack.step);
+
+        // Source File: "chapter_stack_and_queue/array_stack.zig"
+        // Run Command: zig build run_array_stack
+        const exe_array_stack = b.addExecutable("list", "chapter_stack_and_queue/array_stack.zig");
+        exe_array_stack.addPackagePath("include", "include/include.zig");
+        exe_array_stack.setTarget(target);
+        exe_array_stack.setBuildMode(mode);
+        exe_array_stack.install();
+        const run_cmd_array_stack = exe_linkedlist_stack.run();
+        run_cmd_array_stack.step.dependOn(b.getInstallStep());
+        if (b.args) |args| run_cmd_array_stack.addArgs(args);
+        const run_step_array_stack = b.step("run_array_stack", "Run array_stack");
+        run_step_array_stack.dependOn(&run_cmd_array_stack.step);       
 }

@@ -7,7 +7,6 @@ const ListNode = @import("ListNode.zig").ListNode;
 const TreeNode = @import("TreeNode.zig").TreeNode;
 
 // Print an array
-// 编译期泛型
 pub fn printArray(comptime T: type, nums: []T) void {
     std.debug.print("[", .{});
     if (nums.len > 0) {
@@ -20,7 +19,7 @@ pub fn printArray(comptime T: type, nums: []T) void {
 }
 
 // Print a list
-pub fn printList(list: std.ArrayList(i32)) void {
+pub fn printList(comptime T: type, list: std.ArrayList(T)) void {
     std.debug.print("[", .{});
     if (list.items.len > 0) {
         for (list.items) |value, i| {
@@ -33,7 +32,7 @@ pub fn printList(list: std.ArrayList(i32)) void {
 }
 
 // Print a linked list
-pub fn printLinkedList(node: ?*ListNode(i32)) !void {
+pub fn printLinkedList(comptime T: type, node: ?*ListNode(T)) !void {
     if (node == null) return;
     var list = std.ArrayList(i32).init(std.heap.page_allocator);
     defer list.deinit();
@@ -46,6 +45,18 @@ pub fn printLinkedList(node: ?*ListNode(i32)) !void {
         std.debug.print("{}{s}", .{value, if (i == list.items.len-1) "\n" else "->" });
     }
 }
+
+// // Print a stack
+// pub fn printStack(comptime T: type, stack: std.ArrayList(T)) !void {
+//     var tmp = stack;
+//     // Reverse the input stack
+//     var stack_rev = std.ArrayList(T).init(std.heap.page_allocator);
+//     defer stack_rev.deinit();
+//     while(tmp.items.len > 0) {
+//         try stack_rev.append(tmp.pop());
+//     }
+//     printList(T, stack_rev);
+// }
 
 // This tree printer is borrowed from TECHIE DELIGHT
 // https://www.techiedelight.com/c-program-print-binary-tree/

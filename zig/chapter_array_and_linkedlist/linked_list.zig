@@ -63,18 +63,18 @@ pub fn main() !void {
     n2.next = &n3;
     n3.next = &n4;
     std.debug.print("初始化的链表为", .{});
-    try inc.PrintUtil.printLinkedList(&n0);
+    try inc.PrintUtil.printLinkedList(i32, &n0);
 
     // 插入结点
     var tmp = inc.ListNode(i32){.val = 0};
     insert(&n0, &tmp);
     std.debug.print("插入结点后的链表为", .{});
-    try inc.PrintUtil.printLinkedList(&n0);
+    try inc.PrintUtil.printLinkedList(i32, &n0);
 
     // 删除结点
     remove(&n0);
     std.debug.print("删除结点后的链表为", .{});
-    try inc.PrintUtil.printLinkedList(&n0);
+    try inc.PrintUtil.printLinkedList(i32, &n0);
 
     // 访问结点
     var node = access(&n0, 3);
