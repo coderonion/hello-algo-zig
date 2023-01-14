@@ -3,8 +3,10 @@
 // Author: sjinzh (sjinzh@gmail.com)
 
 const std = @import("std");
-const ListNode = @import("ListNode.zig").ListNode;
-const TreeNode = @import("TreeNode.zig").TreeNode;
+pub const ListUtil = @import("ListNode.zig");
+pub const ListNode = ListUtil.ListNode;
+pub const TreeUtil = @import("TreeNode.zig");
+pub const TreeNode = TreeUtil.TreeNode;
 
 // Print an array
 pub fn printArray(comptime T: type, nums: []T) void {
@@ -28,13 +30,12 @@ pub fn printList(comptime T: type, list: std.ArrayList(T)) void {
     } else {
         std.debug.print("]", .{});
     }
-    
 }
 
 // Print a linked list
 pub fn printLinkedList(comptime T: type, node: ?*ListNode(T)) !void {
     if (node == null) return;
-    var list = std.ArrayList(i32).init(std.heap.page_allocator);
+    var list = std.ArrayList(T).init(std.heap.page_allocator);
     defer list.deinit();
     var head = node;
     while (head != null) {
@@ -46,17 +47,36 @@ pub fn printLinkedList(comptime T: type, node: ?*ListNode(T)) !void {
     }
 }
 
-// // Print a stack
-// pub fn printStack(comptime T: type, stack: std.ArrayList(T)) !void {
-//     var tmp = stack;
-//     // Reverse the input stack
-//     var stack_rev = std.ArrayList(T).init(std.heap.page_allocator);
-//     defer stack_rev.deinit();
-//     while(tmp.items.len > 0) {
-//         try stack_rev.append(tmp.pop());
-//     }
-//     printList(T, stack_rev);
-// }
+// Print a deque
+pub fn printDeque(comptime T: type, deque: std.TailQueue(T)) void {
+    var deque_tmp = deque;
+    std.debug.print("[", .{});
+    while (deque_tmp.len > 0) {
+        var front = deque_tmp.popFirst().?.data;
+        std.debug.print("{}{s}", .{front, if (deque_tmp.len == 0) "]" else ", " });
+    }
+}
+
+// Print a HashMap
+pub fn printHashMap(comptime TKey: type, comptime TValue: type, map: std.AutoHashMap(TKey, TValue)) void {
+    var it = map.iterator();
+    while (it.next()) |kv| {
+        var key = kv.key_ptr.*;
+        var value = kv.value_ptr.*;
+        std.debug.print("{} -> {s}\n", .{key, value});
+    }
+}
+
+// print a heap (PriorityQueue)
+pub fn printHeap(comptime T: type, mem_allocator: std.mem.Allocator, queue: anytype) !void {
+    var arr = queue.items;
+    var len = queue.len;
+    std.debug.print("堆的数组表示：", .{});
+    printArray(T, arr[0..len]);
+    std.debug.print("\n堆的树状表示：\n", .{});
+    var root = try TreeUtil.arrToTree(T, mem_allocator, arr[0..len]);
+    try printTree(root, null, false);
+}
 
 // This tree printer is borrowed from TECHIE DELIGHT
 // https://www.techiedelight.com/c-program-print-binary-tree/
