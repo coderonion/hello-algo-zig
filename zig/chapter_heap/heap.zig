@@ -14,17 +14,16 @@ fn greaterThan(context: void, a: i32, b: i32) std.math.Order {
     return lessThan(context, a, b).invert();
 }
 
-fn testPush(comptime T: type, mem_allocator: std.mem.Allocator, heap_push: anytype, val: T) !void {
-    var heap = heap_push;
+fn testPush(comptime T: type, mem_allocator: std.mem.Allocator, heap: anytype, val: T) !void {
     try heap.add(val);  //元素入堆
     std.debug.print("\n元素 {} 入堆后\n", .{val});
     try inc.PrintUtil.printHeap(T, mem_allocator, heap);
 }
 
-fn testPop(comptime T: type, mem_allocator: std.mem.Allocator, heap_pop: anytype) !void {
-    var val = heap_pop.remove();    //堆顶元素出堆
+fn testPoll(comptime T: type, mem_allocator: std.mem.Allocator, heap: anytype) !void {
+    var val = heap.remove();    //堆顶元素出堆
     std.debug.print("\n堆顶元素 {} 出堆后\n", .{val});
-    try inc.PrintUtil.printHeap(T, mem_allocator, heap_pop);
+    try inc.PrintUtil.printHeap(T, mem_allocator, heap);
 }
 
 // Driver Code
@@ -62,22 +61,21 @@ pub fn main() !void {
     std.debug.print("\n堆顶元素为 {}\n", .{peek});
 
     // 堆顶元素出堆
-    try testPop(i32, mem_allocator, &maxHeap);
-    try testPop(i32, mem_allocator, &maxHeap);
-    try testPop(i32, mem_allocator, &maxHeap);
-    try testPop(i32, mem_allocator, &maxHeap);
-    try testPop(i32, mem_allocator, &maxHeap);
+    try testPoll(i32, mem_allocator, &maxHeap);
+    try testPoll(i32, mem_allocator, &maxHeap);
+    try testPoll(i32, mem_allocator, &maxHeap);
+    try testPoll(i32, mem_allocator, &maxHeap);
+    try testPoll(i32, mem_allocator, &maxHeap);
 
     // 获取堆的大小
     var size = maxHeap.len;
-    std.debug.print("\n堆元素数量为 {}", .{size});
+    std.debug.print("\n堆元素数量为 {}\n", .{size});
 
     // 判断堆是否为空
     var isEmpty = if (maxHeap.len == 0) true else false;
     std.debug.print("\n堆是否为空 {}\n", .{isEmpty});
 
     // 输入列表并建堆
-    // 时间复杂度为 O(n) ，而非 O(nlogn)
     try minHeap.addSlice(&[_]i32{ 1, 3, 2, 5, 4 });
     std.debug.print("\n输入列表并建立小顶堆后\n", .{});
     try inc.PrintUtil.printHeap(i32, mem_allocator, minHeap);
@@ -85,4 +83,3 @@ pub fn main() !void {
     const getchar = try std.io.getStdIn().reader().readByte();
     _ = getchar;
 }
-
