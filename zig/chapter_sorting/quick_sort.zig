@@ -25,7 +25,7 @@ const QuickSort = struct {
             swap(nums, i, j);   // 交换这两个元素
         }
         swap(nums, i, left);    // 将基准数交换至两子数组的分界线
-        return i;                // 返回基准数的索引
+        return i;               // 返回基准数的索引
     }
 
     // 快速排序
@@ -77,7 +77,7 @@ const QuickSortMedian = struct {
             swap(nums, i, j);   // 交换这两个元素
         }
         swap(nums, i, left);    // 将基准数交换至两子数组的分界线
-        return i;                // 返回基准数的索引
+        return i;               // 返回基准数的索引
     }
 
     // 快速排序
@@ -113,7 +113,7 @@ const QuickSortTailCall = struct {
             swap(nums, i, j);   // 交换这两个元素
         }
         swap(nums, i, left);    // 将基准数交换至两子数组的分界线
-        return i;                // 返回基准数的索引
+        return i;               // 返回基准数的索引
     }
 
     // 快速排序（尾递归优化）
@@ -145,7 +145,7 @@ pub fn main() !void {
     // 快速排序
     var nums = [_]i32{ 2, 4, 1, 0, 3, 5 };
     QuickSort.quickSort(&nums, 0, nums.len - 1);
-    std.debug.print("\n快速排序完成后 nums = ", .{});
+    std.debug.print("快速排序完成后 nums = ", .{});
     inc.PrintUtil.printArray(i32, &nums);
 
     // 快速排序（中位基准数优化）
