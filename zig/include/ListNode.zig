@@ -48,11 +48,3 @@ pub fn arrToLinkedList(comptime T: type, mem_allocator: std.mem.Allocator, arr: 
     }
     return dum.next;
 }
-
-// // Get a list node with specific value from a linked list
-// pub fn getListNode(head: ?Self, val: i32) ?*Self {
-//     while (head != null and head.?.val != val) {
-//         head = head.next;
-//     }
-//     return head;
-// }
