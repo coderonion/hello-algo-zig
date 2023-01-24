@@ -118,7 +118,6 @@ pub fn main() !void {
     var empty = stack.empty();
     std.debug.print("\n栈是否为空 = {}", .{empty});
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }
 

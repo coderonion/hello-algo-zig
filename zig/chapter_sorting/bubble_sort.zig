@@ -60,7 +60,6 @@ pub fn main() !void {
     std.debug.print("\n冒泡排序完成后 nums1 = ", .{});
     inc.PrintUtil.printArray(i32, &nums1);
     
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }
 

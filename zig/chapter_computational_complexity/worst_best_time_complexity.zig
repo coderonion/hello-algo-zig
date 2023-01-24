@@ -42,7 +42,6 @@ pub fn main() !void {
         std.debug.print("\n数字 1 的索引为 {}\n", .{index});
     }
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }
 

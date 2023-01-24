@@ -124,6 +124,5 @@ pub fn main() !void {
     };
     try inc.PrintUtil.printTree(root, null, false);
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }

@@ -162,6 +162,5 @@ pub fn main() !void {
     }
     value_set.deinit();
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }

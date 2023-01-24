@@ -182,7 +182,6 @@ pub fn main() !void {
     count = factorialRecur(n);
     std.debug.print("阶乘阶（递归实现）的计算操作数量 = {}\n", .{count});
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }
 

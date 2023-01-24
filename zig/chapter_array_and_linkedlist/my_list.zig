@@ -175,7 +175,6 @@ pub fn main() !void {
     inc.PrintUtil.printArray(i32, try list.toArray());
     std.debug.print(" ，容量 = {} ，长度 = {}\n", .{list.capacity(), list.size()});
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }
 

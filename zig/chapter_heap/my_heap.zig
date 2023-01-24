@@ -188,7 +188,6 @@ pub fn main() !void {
     var isEmpty = maxHeap.isEmpty();
     std.debug.print("\n堆是否为空 {}\n", .{isEmpty});
 
-    const getchar = try std.io.getStdIn().reader().readByte();
-    _ = getchar;
+    _ = try std.io.getStdIn().reader().readByte();
 }
 
