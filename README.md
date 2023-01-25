@@ -1,3 +1,3 @@
 # Hello-Algo-Scala-Zig-C
-- Scala, Zig and C programming language codes for the famous public project [krahets/hello-algo](https://github.com/krahets/hello-algo) <img src="https://img.shields.io/github/stars/krahets/hello-algo?style=social"/> about data structures and algorithms.
-- Go read this great open access e-book now -> [《Hello, Algorithm》|《 Hello，算法 》 | hello-algo.com](https://www.hello-algo.com/). 
+- [Scala](https://www.scala-lang.org/), [Zig](https://ziglang.org/), [Rust](https://www.rust-lang.org/) and [C](https://www.open-std.org/JTC1/SC22/WG14/) programming language codes for the famous public project [krahets/hello-algo](https://github.com/krahets/hello-algo) <img src="https://img.shields.io/github/stars/krahets/hello-algo?style=social"/> about data structures and algorithms.
+- Go read this great open access e-book now -> [ hello-algo.com |《Hello, Algorithm》|《 Hello，算法 》](https://www.hello-algo.com/). 
