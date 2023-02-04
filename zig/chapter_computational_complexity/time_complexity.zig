@@ -10,7 +10,7 @@ fn constant(n: i32) i32 {
     var count: i32 = 0;
     const size: i32 = 100_000;
     var i: i32 = 0;
-    while(i<size) : (i += 1) {
+    while(i < size) : (i += 1) {
         count += 1;
     }
     return count;
@@ -74,15 +74,15 @@ fn bubbleSort(nums: []i32) i32 {
 // 指数阶（循环实现）
 fn exponential(n: i32) i32{
     var count: i32 = 0;
-    var bas: i32 = 1;
+    var base: i32 = 1;
     var i: i32 = 0;
     // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
     while (i < n) : (i += 1) {
         var j: i32 = 0;
-        while (j < bas) : (j += 1) {
+        while (j < base) : (j += 1) {
             count += 1;
         }
-        bas *= 2;
+        base *= 2;
     }
     // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
     return count;
