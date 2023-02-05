@@ -4,7 +4,7 @@
  * Author: sjinzh (sjinzh@gmail.com)
 */
 
-// 冒泡排序
+/* 冒泡排序 */
 fn bubble_sort(nums: &mut [i32]) {
     // 外循环：待排序元素数量为 n-1, n-2, ..., 1
     for i in (1..nums.len()).rev() {
@@ -20,7 +20,7 @@ fn bubble_sort(nums: &mut [i32]) {
     }
 }
 
-// 冒泡排序（标志优化）
+/* 冒泡排序（标志优化） */
 fn bubble_sort_with_flag(nums: &mut [i32]) {
     // 外循环：待排序元素数量为 n-1, n-2, ..., 1
     for i in (1..nums.len()).rev() {
@@ -49,5 +49,5 @@ pub fn main() {
     let mut nums1 = [ 4, 1, 3, 1, 5, 2 ];
     bubble_sort_with_flag(&mut nums1);
     print!("\n冒泡排序完成后 nums1 = ");
-    inc::print_util::print_array(&nums);
+    inc::print_util::print_array(&nums1);
 }
