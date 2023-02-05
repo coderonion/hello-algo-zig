@@ -185,8 +185,8 @@ pub fn main() !void {
     std.debug.print("\n堆元素数量为 {}", .{size});
 
     // 判断堆是否为空
-    var isEmpty = maxHeap.isEmpty();
-    std.debug.print("\n堆是否为空 {}\n", .{isEmpty});
+    var is_empty = maxHeap.isEmpty();
+    std.debug.print("\n堆是否为空 {}\n", .{is_empty});
 
     _ = try std.io.getStdIn().reader().readByte();
 }

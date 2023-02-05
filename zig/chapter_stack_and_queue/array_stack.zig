@@ -95,8 +95,8 @@ pub fn main() !void {
     std.debug.print("\n栈的长度 size = {}", .{size});
 
     // 判断栈是否为空
-    var empty = stack.empty();
-    std.debug.print("\n栈是否为空 = {}", .{empty});
+    var is_empty = stack.empty();
+    std.debug.print("\n栈是否为空 = {}", .{is_empty});
 
     _ = try std.io.getStdIn().reader().readByte();
 }
