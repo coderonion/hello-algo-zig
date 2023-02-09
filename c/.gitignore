@@ -1,4 +1,0 @@
-# zig build system files
-zig-cache/
-zig-out/
-*.exe
