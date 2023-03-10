@@ -37,7 +37,7 @@ pub fn ArrayStack(comptime T: type) type {
 
         // 访问栈顶元素
         pub fn peek(self: *Self) T {
-            if (self.is_empty()) @panic("栈为空");
+            if (self.isEmpty()) @panic("栈为空");
             return self.stack.?.items[self.size() - 1];
         }  
 
