@@ -6,9 +6,10 @@
 
 use std::fmt::Display;
 use std::collections::{HashMap, LinkedList};
-use crate::ListNode;
 use std::rc::Rc;
 use std::cell::RefCell;
+
+use crate::list_node::ListNode;
 
 /* Print an array */
 pub fn print_array<T: Display>(nums: &[T]) {
