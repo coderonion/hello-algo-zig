@@ -9,6 +9,7 @@ include!("../include/include.rs");
 use std::collections::HashMap;
 use std::rc::Rc;
 use std::cell::RefCell;
+use list_node::ListNode;
 
 /* 函数 */
 fn function() ->i32 {
