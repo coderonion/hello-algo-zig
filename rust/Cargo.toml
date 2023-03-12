@@ -54,6 +54,11 @@ path = "chapter_stack_and_queue/stack.rs"
 name = "linkedlist_stack"
 path = "chapter_stack_and_queue/linkedlist_stack.rs"
 
+# Run Command: cargo run --bin linkedlist_queue
+[[bin]]
+name = "linkedlist_queue"
+path = "chapter_stack_and_queue/linkedlist_queue.rs"
+
 # Run Command: cargo run --bin queue
 [[bin]]
 name = "queue"

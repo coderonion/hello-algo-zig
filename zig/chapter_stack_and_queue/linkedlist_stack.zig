@@ -6,7 +6,6 @@ const std = @import("std");
 const inc = @import("include");
 
 // 基于链表实现的栈
-// 编译期泛型
 pub fn LinkedListStack(comptime T: type) type {
     return struct {
         const Self = @This();
