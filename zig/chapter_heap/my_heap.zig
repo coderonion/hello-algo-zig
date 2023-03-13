@@ -159,33 +159,33 @@ pub fn main() !void {
     const mem_allocator = mem_arena.allocator();
 
     // 初始化大顶堆
-    var maxHeap = MaxHeap(i32){};
-    try maxHeap.init(std.heap.page_allocator, &[_]i32{ 9, 8, 6, 6, 7, 5, 2, 1, 4, 3, 6, 2 });
-    defer maxHeap.deinit();
+    var max_heap = MaxHeap(i32){};
+    try max_heap.init(std.heap.page_allocator, &[_]i32{ 9, 8, 6, 6, 7, 5, 2, 1, 4, 3, 6, 2 });
+    defer max_heap.deinit();
     std.debug.print("\n输入列表并建堆后\n", .{});
-    try maxHeap.print(mem_allocator);
+    try max_heap.print(mem_allocator);
 
     // 获取堆顶元素
-    var peek = maxHeap.peek();
+    var peek = max_heap.peek();
     std.debug.print("\n堆顶元素为 {}\n", .{peek});
 
     // 元素入堆
     const val = 7;
-    try maxHeap.push(val);
+    try max_heap.push(val);
     std.debug.print("\n元素 {} 入堆后\n", .{val});
-    try maxHeap.print(mem_allocator);
+    try max_heap.print(mem_allocator);
 
     // 堆顶元素出堆
-    peek = try maxHeap.pop();
+    peek = try max_heap.pop();
     std.debug.print("\n堆顶元素 {} 出堆后\n", .{peek});
-    try maxHeap.print(mem_allocator);
+    try max_heap.print(mem_allocator);
 
     // 获取堆的大小
-    var size = maxHeap.size();
+    var size = max_heap.size();
     std.debug.print("\n堆元素数量为 {}", .{size});
 
     // 判断堆是否为空
-    var is_empty = maxHeap.isEmpty();
+    var is_empty = max_heap.isEmpty();
     std.debug.print("\n堆是否为空 {}\n", .{is_empty});
 
     _ = try std.io.getStdIn().reader().readByte();
