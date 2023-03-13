@@ -20,7 +20,7 @@ fn testPush(comptime T: type, mem_allocator: std.mem.Allocator, heap: anytype, v
     try inc.PrintUtil.printHeap(T, mem_allocator, heap);
 }
 
-fn testPoll(comptime T: type, mem_allocator: std.mem.Allocator, heap: anytype) !void {
+fn testPop(comptime T: type, mem_allocator: std.mem.Allocator, heap: anytype) !void {
     var val = heap.remove();    //堆顶元素出堆
     std.debug.print("\n堆顶元素 {} 出堆后\n", .{val});
     try inc.PrintUtil.printHeap(T, mem_allocator, heap);
@@ -61,11 +61,11 @@ pub fn main() !void {
     std.debug.print("\n堆顶元素为 {}\n", .{peek});
 
     // 堆顶元素出堆
-    try testPoll(i32, mem_allocator, &maxHeap);
-    try testPoll(i32, mem_allocator, &maxHeap);
-    try testPoll(i32, mem_allocator, &maxHeap);
-    try testPoll(i32, mem_allocator, &maxHeap);
-    try testPoll(i32, mem_allocator, &maxHeap);
+    try testPop(i32, mem_allocator, &maxHeap);
+    try testPop(i32, mem_allocator, &maxHeap);
+    try testPop(i32, mem_allocator, &maxHeap);
+    try testPop(i32, mem_allocator, &maxHeap);
+    try testPop(i32, mem_allocator, &maxHeap);
 
     // 获取堆的大小
     var size = maxHeap.len;
