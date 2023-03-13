@@ -11,14 +11,14 @@ pub fn MaxHeap(comptime T: type) type {
     return struct {
         const Self = @This();
         
-        maxHeap: ?std.ArrayList(T) = null,      // 使用列表而非数组，这样无需考虑扩容问题
+        max_heap: ?std.ArrayList(T) = null,      // 使用列表而非数组，这样无需考虑扩容问题
 
         // 构造函数，根据输入列表建堆
         pub fn init(self: *Self, allocator: std.mem.Allocator, nums: []const T) !void {
-            if (self.maxHeap != null) return;
-            self.maxHeap = std.ArrayList(T).init(allocator);
+            if (self.max_heap != null) return;
+            self.max_heap = std.ArrayList(T).init(allocator);
             // 将列表元素原封不动添加进堆
-            try self.maxHeap.?.appendSlice(nums);
+            try self.max_heap.?.appendSlice(nums);
             // 堆化除叶结点以外的其他所有结点
             var i: usize = parent(self.size() - 1) + 1;
             while (i > 0) : (i -= 1) {
@@ -28,7 +28,7 @@ pub fn MaxHeap(comptime T: type) type {
 
         // 析构函数，释放内存
         pub fn deinit(self: *Self) void {
-            if (self.maxHeap != null) self.maxHeap.?.deinit();
+            if (self.max_heap != null) self.max_heap.?.deinit();
         }
 
         // 获取左子结点索引
@@ -49,16 +49,16 @@ pub fn MaxHeap(comptime T: type) type {
 
         // 交换元素
         fn swap(self: *Self, i: usize, j: usize) !void {
-            var a = self.maxHeap.?.items[i];
-            var b = self.maxHeap.?.items[j];
+            var a = self.max_heap.?.items[i];
+            var b = self.max_heap.?.items[j];
             var tmp = a;
-            try self.maxHeap.?.replaceRange(i, 1, &[_]T{b});
-            try self.maxHeap.?.replaceRange(j, 1, &[_]T{tmp});
+            try self.max_heap.?.replaceRange(i, 1, &[_]T{b});
+            try self.max_heap.?.replaceRange(j, 1, &[_]T{tmp});
         }
 
         // 获取堆大小
         pub fn size(self: *Self) usize {
-            return self.maxHeap.?.items.len;
+            return self.max_heap.?.items.len;
         }
 
         // 判断堆是否为空
@@ -68,13 +68,13 @@ pub fn MaxHeap(comptime T: type) type {
 
         // 访问堆顶元素
         pub fn peek(self: *Self) T {
-            return self.maxHeap.?.items[0];
+            return self.max_heap.?.items[0];
         }  
 
         // 元素入堆
         pub fn push(self: *Self, val: T) !void {
             // 添加结点
-            try self.maxHeap.?.append(val);
+            try self.max_heap.?.append(val);
             // 从底至顶堆化
             try self.siftUp(self.size() - 1);
         }  
@@ -86,7 +86,7 @@ pub fn MaxHeap(comptime T: type) type {
                 // 获取结点 i 的父结点
                 var p = parent(i);
                 // 当“越过根结点”或“结点无需修复”时，结束堆化
-                if (p < 0 or self.maxHeap.?.items[i] <= self.maxHeap.?.items[p]) break;
+                if (p < 0 or self.max_heap.?.items[i] <= self.max_heap.?.items[p]) break;
                 // 交换两结点
                 try self.swap(i, p);
                 // 循环向上堆化
@@ -101,7 +101,7 @@ pub fn MaxHeap(comptime T: type) type {
             // 交换根结点与最右叶结点（即交换首元素与尾元素）
             try self.swap(0, self.size() - 1);
             // 删除结点
-            var val = self.maxHeap.?.pop();
+            var val = self.max_heap.?.pop();
             // 从顶至底堆化
             try self.siftDown(0);
             // 返回堆顶元素
@@ -116,8 +116,8 @@ pub fn MaxHeap(comptime T: type) type {
                 var l = left(i);
                 var r = right(i);
                 var ma = i;
-                if (l < self.size() and self.maxHeap.?.items[l] > self.maxHeap.?.items[ma]) ma = l;
-                if (r < self.size() and self.maxHeap.?.items[r] > self.maxHeap.?.items[ma]) ma = r;
+                if (l < self.size() and self.max_heap.?.items[l] > self.max_heap.?.items[ma]) ma = l;
+                if (r < self.size() and self.max_heap.?.items[r] > self.max_heap.?.items[ma]) ma = r;
                 // 若结点 i 最大或索引 l, r 越界，则无需继续堆化，跳出
                 if (ma == i) break;
                 // 交换两结点
@@ -141,7 +141,7 @@ pub fn MaxHeap(comptime T: type) type {
             const PQgt = std.PriorityQueue(T, void, greaterThan);
             var queue = PQgt.init(std.heap.page_allocator, {});
             defer queue.deinit();
-            try queue.addSlice(self.maxHeap.?.items);
+            try queue.addSlice(self.max_heap.?.items);
             try inc.PrintUtil.printHeap(T, mem_allocator, queue);
         } 
     };
