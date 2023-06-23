@@ -57,10 +57,6 @@ fn mergeSort(nums: []i32, left: usize, right: usize) !void {
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     // 归并排序
     var nums = [_]i32{ 7, 3, 2, 6, 0, 1, 5, 4 };
     try mergeSort(&nums, 0, nums.len - 1);

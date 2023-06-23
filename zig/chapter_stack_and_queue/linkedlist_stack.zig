@@ -68,7 +68,7 @@ pub fn LinkedListStack(comptime T: type) type {
         pub fn toArray(self: *Self) ![]T {
             var node = self.stack_top;
             var res = try self.mem_allocator.alloc(T, self.size());
-            std.mem.set(T, res, @as(T, 0));
+            @memset(res, @as(T, 0));
             var i: usize = 0;
             while (i < res.len) : (i += 1) {
                 res[res.len - i - 1] = node.?.val;
@@ -81,10 +81,6 @@ pub fn LinkedListStack(comptime T: type) type {
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     // 初始化栈
     var stack = LinkedListStack(i32){};
     try stack.init(std.heap.page_allocator);

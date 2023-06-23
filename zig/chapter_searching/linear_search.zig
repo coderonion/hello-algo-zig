@@ -8,7 +8,7 @@ const inc = @import("include");
 // 线性查找（数组）
 fn linearSearchList(comptime T: type, nums: std.ArrayList(T), target: T) T {
     // 遍历数组
-    for (nums.items) |num, i| {
+    for (nums.items, 0..) |num, i| {
         // 找到目标元素， 返回其索引
         if (num == target) {
             return @intCast(T, i);
@@ -32,10 +32,6 @@ pub fn linearSearchLinkedList(comptime T: type, node: ?*inc.ListNode(T), target:
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     var target: i32 = 3;
 
     // 在数组中执行线性查找

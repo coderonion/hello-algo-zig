@@ -9,7 +9,7 @@ const inc = @import("include");
 pub fn randomNumbers(comptime n: usize) [n]i32 {
     var nums: [n]i32 = undefined;
     // 生成数组 nums = { 1, 2, 3, ..., n }
-    for (nums) |*num, i| {
+    for (&nums, 0..) |*num, i| {
         num.* = @intCast(i32, i) + 1;
     }
     // 随机打乱数组元素
@@ -20,7 +20,7 @@ pub fn randomNumbers(comptime n: usize) [n]i32 {
 
 // 查找数组 nums 中数字 1 所在索引
 pub fn findOne(nums: []i32) i32 {
-    for (nums) |num, i| {
+    for (nums, 0..) |num, i| {
         if (num == 1) return @intCast(i32, i);
     }
     return -1;
@@ -28,10 +28,6 @@ pub fn findOne(nums: []i32) i32 {
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     var i: i32 = 0;
     while (i < 10) : (i += 1) {
         const n: usize = 100;

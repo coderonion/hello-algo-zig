@@ -25,7 +25,7 @@ pub fn ArrayQueue(comptime T: type) type {
             }
             self.cap = cap;
             self.nums = try self.mem_allocator.alloc(T, self.cap);
-            std.mem.set(T, self.nums, @as(T, 0));
+            @memset(self.nums, @as(T, 0));
         }
         
         // 析构函数（释放内存）
@@ -82,7 +82,7 @@ pub fn ArrayQueue(comptime T: type) type {
         pub fn toArray(self: *Self) ![]T {
             // 仅转换有效长度范围内的列表元素
             var res = try self.mem_allocator.alloc(T, self.size());
-            std.mem.set(T, res, @as(T, 0));
+            @memset(res, @as(T, 0));
             var i: usize = 0;
             var j: usize = self.front;
             while (i < self.size()) : ({ i += 1; j += 1; }) {

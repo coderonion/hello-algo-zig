@@ -20,7 +20,7 @@ pub fn BinarySearchTree(comptime T: type) type {
                 self.mem_arena = std.heap.ArenaAllocator.init(allocator);
                 self.mem_allocator = self.mem_arena.?.allocator();
             }
-            std.sort.sort(T, nums, {}, comptime std.sort.asc(T));   // 排序数组
+            std.mem.sort(T, nums, {}, comptime std.sort.asc(T));   // 排序数组
             self.root = try self.buildTree(nums, 0, nums.len - 1);  // 构建二叉搜索树
         }
 
@@ -158,10 +158,6 @@ pub fn BinarySearchTree(comptime T: type) type {
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     // 初始化二叉树
     var nums = [_]i32{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
     var bst = BinarySearchTree(i32){};

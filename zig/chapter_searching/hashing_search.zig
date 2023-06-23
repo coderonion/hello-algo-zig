@@ -23,10 +23,6 @@ fn hashingSearch1(comptime T: type, map: std.AutoHashMap(T, *inc.ListNode(T)), t
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     var target: i32 = 3;
 
     // 哈希查找（数组）
@@ -34,7 +30,7 @@ pub fn main() !void {
     // 初始化哈希表
     var map = std.AutoHashMap(i32, i32).init(std.heap.page_allocator);
     defer map.deinit();
-    for (nums) |num, i| {
+    for (nums, 0..) |num, i| {
         try map.put(num, @intCast(i32, i));    // key: 元素，value: 索引
     }
     var index = hashingSearch(i32, map, target);

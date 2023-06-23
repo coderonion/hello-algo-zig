@@ -141,10 +141,6 @@ fn factorialRecur(n: i32) i32 {
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     // 可以修改 n 运行，体会一下各种复杂度的操作数量变化趋势
     const n: i32 = 8;
     std.debug.print("输入数据大小 n = {}\n", .{n});
@@ -160,7 +156,7 @@ pub fn main() !void {
 
     count = quadratic(n);
     std.debug.print("平方阶的计算操作数量 = {}\n", .{count});
-    for (nums) |*num, i| {
+    for (&nums, 0..) |*num, i| {
         num.* = n - @intCast(i32, i);  // [n,n-1,...,2,1]
     }
     count = bubbleSort(&nums);

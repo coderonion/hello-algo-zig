@@ -70,33 +70,33 @@ pub fn ArrayHashMap(comptime T: type) type {
         }       
 
         // 获取所有键值对
-        pub fn entrySet(self: *Self) !*std.ArrayList(T) {
+        pub fn entrySet(self: *Self) !std.ArrayList(T) {
             var entry_set = std.ArrayList(T).init(self.mem_allocator);
             for (self.bucket.?.items) |item| {
                 if (item == null) continue;
                 try entry_set.append(item.?);
             }
-            return &entry_set;
+            return entry_set;
         }  
 
         // 获取所有键
-        pub fn keySet(self: *Self) !*std.ArrayList(usize) {
+        pub fn keySet(self: *Self) !std.ArrayList(usize) {
             var key_set = std.ArrayList(usize).init(self.mem_allocator);
             for (self.bucket.?.items) |item| {
                 if (item == null) continue;
                 try key_set.append(item.?.key);
             }
-            return &key_set;
+            return key_set;
         }  
 
         // 获取所有值
-        pub fn valueSet(self: *Self) !*std.ArrayList([]const u8) {
+        pub fn valueSet(self: *Self) !std.ArrayList([]const u8) {
             var value_set = std.ArrayList([]const u8).init(self.mem_allocator);
             for (self.bucket.?.items) |item| {
                 if (item == null) continue;
                 try value_set.append(item.?.val);
             }
-            return &value_set;
+            return value_set;
         }
 
         // 打印哈希表
@@ -112,10 +112,6 @@ pub fn ArrayHashMap(comptime T: type) type {
 
 // Driver Code
 pub fn main() !void {
-    // 查看本地CPU架构和操作系统信息
-    var native_target_info = try std.zig.system.NativeTargetInfo.detect(std.zig.CrossTarget{});
-    std.debug.print("Native Info: CPU Arch = {}, OS = {}\n", .{native_target_info.target.cpu.arch, native_target_info.target.os.tag});
-
     // 初始化哈希表
     var map = ArrayHashMap(Entry){};
     try map.init(std.heap.page_allocator);
@@ -160,7 +156,7 @@ pub fn main() !void {
     for (value_set.items) |val| {
         std.debug.print("{s}\n", .{val});
     }
-    value_set.deinit();
+    defer value_set.deinit();
 
     _ = try std.io.getStdIn().reader().readByte();
 }
