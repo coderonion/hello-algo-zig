@@ -14,10 +14,10 @@ path = "chapter_computational_complexity/time_complexity.rs"
 name = "worst_best_time_complexity"
 path = "chapter_computational_complexity/worst_best_time_complexity.rs"
 
-# Run Command: cargo run --bin space_complexity
-[[bin]]
-name = "space_complexity"
-path = "chapter_computational_complexity/space_complexity.rs"
+# # Run Command: cargo run --bin space_complexity
+# [[bin]]
+# name = "space_complexity"
+# path = "chapter_computational_complexity/space_complexity.rs"
 
 # Run Command: cargo run --bin leetcode_two_sum
 [[bin]]
