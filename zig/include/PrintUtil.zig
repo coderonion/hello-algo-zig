@@ -131,4 +131,3 @@ pub fn printTree(root: ?*TreeNode(i32), prev: ?*Trunk, isLeft: bool) !void {
 
     try printTree(root.?.left, &trunk, false);
 }
-

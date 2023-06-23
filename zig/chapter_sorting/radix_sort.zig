@@ -17,27 +17,27 @@ fn countingSortDigit(nums: []i32, exp: i32) !void {
     var mem_arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     // defer mem_arena.deinit();
     const mem_allocator = mem_arena.allocator();
-    var bucket = try mem_allocator.alloc(usize, 10);
-    @memset(bucket, 0);
+    var counter = try mem_allocator.alloc(usize, 10);
+    @memset(counter, 0);
     var n = nums.len;
     // 借助桶来统计 0~9 各数字的出现次数
     for (nums) |num| {
         var d = @bitCast(u32, digit(num, exp));    // 获取 nums[i] 第 k 位，记为 d
-        bucket[d] += 1;             // 统计数字 d 的出现次数
+        counter[d] += 1;             // 统计数字 d 的出现次数
     }
     // 求前缀和，将“出现个数”转换为“数组索引”
     var i: usize = 1;
     while (i < 10) : (i += 1) {
-        bucket[i] += bucket[i - 1];
+        counter[i] += counter[i - 1];
     }
     // 倒序遍历，根据桶内统计结果，将各元素填入 res
     var res = try mem_allocator.alloc(i32, n);
     i = n - 1;
     while (i >= 0) : (i -= 1) {
         var d = @bitCast(u32, digit(nums[i], exp));
-        var j = bucket[d] - 1;  // 获取 d 在数组中的索引 j
+        var j = counter[d] - 1;  // 获取 d 在数组中的索引 j
         res[j] = nums[i];       // 将当前元素填入索引 j
-        bucket[d] -= 1;         // 将 d 的数量减 1
+        counter[d] -= 1;         // 将 d 的数量减 1
         if (i == 0) break;
     }
     // 使用结果覆盖原数组 nums
