@@ -69,15 +69,15 @@ pub fn BinarySearchTree(comptime T: type) type {
         }
 
         // 插入结点
-        fn insert(self: *Self, num: T) !?*inc.TreeNode(T) {
+        fn insert(self: *Self, num: T) !void {
             // 若树为空，直接提前返回
-            if (self.root == null) return null;
+            if (self.root == null) return;
             var cur = self.root;
             var pre: ?*inc.TreeNode(T) = null;
             // 循环查找，越过叶结点后跳出
             while (cur != null) {
                 // 找到重复结点，直接返回
-                if (cur.?.val == num) return null;
+                if (cur.?.val == num) return;
                 pre = cur;
                 // 插入位置在 cur 的右子树中
                 if (cur.?.val < num) {
@@ -95,13 +95,12 @@ pub fn BinarySearchTree(comptime T: type) type {
             } else {
                 pre.?.left = node;
             }
-            return node;
         }
 
         // 删除结点
-        fn remove(self: *Self, num: T) ?*inc.TreeNode(T) {
+        fn remove(self: *Self, num: T) void {
             // 若树为空，直接提前返回
-            if (self.root == null) return null;
+            if (self.root == null) return;
             var cur = self.root;
             var pre: ?*inc.TreeNode(T) = null;
             // 循环查找，越过叶结点后跳出
@@ -118,7 +117,7 @@ pub fn BinarySearchTree(comptime T: type) type {
                 }
             }
             // 若无待删除结点，则直接返回
-            if (cur == null) return null;
+            if (cur == null) return;
             // 子结点数量 = 0 or 1
             if (cur.?.left == null or cur.?.right == null) {
                 // 当子结点数量 = 0 / 1 时， child = null / 该子结点
@@ -132,26 +131,16 @@ pub fn BinarySearchTree(comptime T: type) type {
             // 子结点数量 = 2
             } else {
                 // 获取中序遍历中 cur 的下一个结点
-                var nex = self.getInOrderNext(cur.?.right);
-                var tmp = nex.?.val;
+                var tmp = cur.?.right;
+                while (tmp.?.left != null) {
+                    tmp = tmp.?.left;
+                }                
+                var tmp_val = tmp.?.val;
                 // 递归删除结点 nex
-                _ = self.remove(nex.?.val);
-                // 将 nex 的值复制给 cur
-                cur.?.val = tmp;
+                self.remove(tmp.?.val);
+                // 将 tmp 的值复制给 cur
+                cur.?.val = tmp_val;
             }
-            return cur;
-        }
-
-        // 获取中序遍历中的下一个结点（仅适用于 root 有左子结点的情况）
-        fn getInOrderNext(self: *Self, node: ?*inc.TreeNode(T)) ?*inc.TreeNode(T) {
-            _ = self;
-            var node_tmp = node;
-            if (node_tmp == null) return null;
-            // 循环访问左子结点，直到叶结点时为最小结点，跳出
-            while (node_tmp.?.left != null) {
-                node_tmp = node_tmp.?.left;
-            }
-            return node_tmp;
         }
     };   
 }
@@ -171,18 +160,18 @@ pub fn main() !void {
     std.debug.print("\n查找到的结点对象为 {any}，结点值 = {}\n", .{node, node.?.val});
 
     // 插入结点
-    node = try bst.insert(16);
+    try bst.insert(16);
     std.debug.print("\n插入结点 16 后，二叉树为\n", .{});
     try inc.PrintUtil.printTree(bst.getRoot(), null, false);
 
     // 删除结点
-    _ = bst.remove(1);
+    bst.remove(1);
     std.debug.print("\n删除结点 1 后，二叉树为\n", .{});
     try inc.PrintUtil.printTree(bst.getRoot(), null, false);
-    _ = bst.remove(2);
+    bst.remove(2);
     std.debug.print("\n删除结点 2 后，二叉树为\n", .{});
     try inc.PrintUtil.printTree(bst.getRoot(), null, false);
-    _ = bst.remove(4);
+    bst.remove(4);
     std.debug.print("\n删除结点 4 后，二叉树为\n", .{});
     try inc.PrintUtil.printTree(bst.getRoot(), null, false);
 

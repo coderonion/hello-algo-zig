@@ -144,13 +144,13 @@ pub fn main() !void {
     for (entry_set.items) |kv| {
         std.debug.print("{} -> {s}\n", .{kv.key, kv.val});
     }
-    entry_set.deinit();
+    defer entry_set.deinit();
     std.debug.print("\n单独遍历键 Key\n", .{});
     var key_set = try map.keySet();
     for (key_set.items) |key| {
         std.debug.print("{}\n", .{key});
     }
-    key_set.deinit();
+    defer key_set.deinit();
     std.debug.print("\n单独遍历值 value\n", .{});
     var value_set = try map.valueSet();
     for (value_set.items) |val| {

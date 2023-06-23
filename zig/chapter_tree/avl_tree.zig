@@ -108,9 +108,8 @@ pub fn AVLTree(comptime T: type) type {
         }
 
         // 插入结点
-        fn insert(self: *Self, val: T) !?*inc.TreeNode(T) {
-            self.root = try self.insertHelper(self.root, val);
-            return self.root;
+        fn insert(self: *Self, val: T) !void {
+            self.root = (try self.insertHelper(self.root, val)).?;
         }
 
         // 递归插入结点（辅助函数）
@@ -137,9 +136,8 @@ pub fn AVLTree(comptime T: type) type {
         }
 
         // 删除结点
-        fn remove(self: *Self, val: T) ?*inc.TreeNode(T) {
-           self.root = self.removeHelper(self.root, val);
-            return self.root;
+        fn remove(self: *Self, val: T) void {
+           self.root = self.removeHelper(self.root, val).?;
         }
 
         // 递归删除结点（辅助函数）
@@ -163,27 +161,18 @@ pub fn AVLTree(comptime T: type) type {
                     }
                 } else {
                     // 子结点数量 = 2 ，则将中序遍历的下个结点删除，并用该结点替换当前结点
-                    var temp = self.getInOrderNext(node.?.right);
+                    var temp = node.?.right;
+                    while (temp.?.left != null) {
+                        temp = temp.?.left;
+                    }
                     node.?.right = self.removeHelper(node.?.right, temp.?.val);
                     node.?.val = temp.?.val;
                 }
             }
-            self.updateHeight(node);    // 更新结点高度
+            self.updateHeight(node); // 更新结点高度
             // 2. 执行旋转操作，使该子树重新恢复平衡
             node = self.rotate(node);
             // 返回子树的根节点
-            return node;
-        }
-
-        // 获取中序遍历中的下一个结点（仅适用于 root 有左子结点的情况）
-        fn getInOrderNext(self: *Self, node_: ?*inc.TreeNode(T)) ?*inc.TreeNode(T) {
-            _ = self;
-            var node = node_;
-            if (node == null) return node;
-            // 循环访问左子结点，直到叶结点时为最小结点，跳出
-            while (node.?.left != null) {
-                node = node.?.left;
-            }
             return node;
         }
 
@@ -211,14 +200,14 @@ pub fn AVLTree(comptime T: type) type {
 
 pub fn testInsert(comptime T: type, tree_: *AVLTree(T), val: T) !void {
     var tree = tree_;
-    _ = try tree.insert(val);
+    try tree.insert(val);
     std.debug.print("\n插入结点 {} 后，AVL 树为\n", .{val});
     try inc.PrintUtil.printTree(tree.root, null, false);
 }
 
 pub fn testRemove(comptime T: type, tree_: *AVLTree(T), val: T) void {
     var tree = tree_;
-    _ = tree.remove(val);
+    tree.remove(val);
     std.debug.print("\n删除结点 {} 后，AVL 树为\n", .{val});
     try inc.PrintUtil.printTree(tree.root, null, false);
 }

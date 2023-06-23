@@ -32,13 +32,6 @@ pub fn build(b: *std.Build) void {
             .path = "chapter_computational_complexity/space_complexity.zig"
         },
 
-        // Source File: "chapter_computational_complexity/leetcode_two_sum.zig"
-        // Run Command: zig build run_leetcode_two_sum
-        .{ 
-            .name = "leetcode_two_sum", 
-            .path = "chapter_computational_complexity/leetcode_two_sum.zig"
-        },
-
         // Source File: "chapter_array_and_linkedlist/array.zig"
         // Run Command: zig build run_array
         .{ 
@@ -207,6 +200,13 @@ pub fn build(b: *std.Build) void {
             .path = "chapter_searching/hashing_search.zig"
         },
 
+        // Source File: "chapter_searching/two_sum.zig"
+        // Run Command: zig build run_two_sum
+        .{ 
+            .name = "two_sum", 
+            .path = "chapter_searching/two_sum.zig"
+        },
+
         // Source File: "chapter_sorting/bubble_sort.zig"
         // Run Command: zig build run_bubble_sort
         .{ 
@@ -261,5 +261,4 @@ pub fn build(b: *std.Build) void {
         const run_step = b.step("run_" ++ name_path.name, "Run the app");
         run_step.dependOn(&run_cmd.step);
     }
-
 }

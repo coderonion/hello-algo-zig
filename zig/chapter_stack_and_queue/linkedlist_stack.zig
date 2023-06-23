@@ -13,7 +13,7 @@ pub fn LinkedListStack(comptime T: type) type {
         stack_top: ?*inc.ListNode(T) = null,             // 将头结点作为栈顶
         stk_size: usize = 0,                             // 栈的长度
         mem_arena: ?std.heap.ArenaAllocator = null,
-        mem_allocator: std.mem.Allocator = undefined,   // 内存分配器
+        mem_allocator: std.mem.Allocator = undefined,    // 内存分配器
 
         // 构造函数（分配内存+初始化栈）
         pub fn init(self: *Self, allocator: std.mem.Allocator) !void {

@@ -12,7 +12,7 @@ pub fn LinkedListQueue(comptime T: type) type {
 
         front: ?*inc.ListNode(T) = null,                // 头结点 front
         rear: ?*inc.ListNode(T) = null,                 // 尾结点 rear
-        que_size: usize = 0,                             // 队列的长度
+        que_size: usize = 0,                            // 队列的长度
         mem_arena: ?std.heap.ArenaAllocator = null,
         mem_allocator: std.mem.Allocator = undefined,   // 内存分配器
 

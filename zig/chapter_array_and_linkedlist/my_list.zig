@@ -6,7 +6,6 @@ const std = @import("std");
 const inc = @import("include");
 
 // 列表类简易实现
-// 编译期泛型
 pub fn MyList(comptime T: type) type {
     return struct {
         const Self = @This();

@@ -1,4 +1,4 @@
-// File: leetcode_two_sum.zig
+// File: two_sum.zig
 // Created Time: 2023-01-07
 // Author: sjinzh (sjinzh@gmail.com)
 
@@ -52,4 +52,6 @@ pub fn main() !void {
     res = (try twoSumHashTable(&nums, target)).?;
     std.debug.print("\n方法二 res = ", .{});
     inc.PrintUtil.printArray(i32, &res); 
+
+    _ = try std.io.getStdIn().reader().readByte();
 }
