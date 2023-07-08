@@ -1,6 +1,10 @@
-# MacOS Desktop Services Store
 .DS_Store
-
-# Editor
+.vs/
 .vscode/
 .idea/
+*.o
+*.a
+*.exe
+
+zig-out/
+zig-cache/
