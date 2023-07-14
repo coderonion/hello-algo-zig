@@ -9,7 +9,7 @@ const inc = @import("include");
 pub fn MyList(comptime T: type) type {
     return struct {
         const Self = @This();
-        
+
         nums: []T = undefined,                        // 数组（存储列表元素）
         numsCapacity: usize = 10,                     // 列表容量
         numSize: usize = 0,                           // 列表长度（即当前元素数量）
@@ -48,14 +48,14 @@ pub fn MyList(comptime T: type) type {
             // 索引如果越界则抛出异常，下同
             if (index < 0 or index >= self.size()) @panic("索引越界");
             return self.nums[index];
-        }  
+        }
 
         // 更新元素
         pub fn set(self: *Self, index: usize, num: T) void {
             // 索引如果越界则抛出异常，下同
             if (index < 0 or index >= self.size()) @panic("索引越界");
             self.nums[index] = num;
-        }  
+        }
 
         // 尾部添加元素
         pub fn add(self: *Self, num: T) !void {
@@ -64,7 +64,7 @@ pub fn MyList(comptime T: type) type {
             self.nums[self.size()] = num;
             // 更新元素数量
             self.numSize += 1;
-        }  
+        }
 
         // 中间插入元素
         pub fn insert(self: *Self, index: usize, num: T) !void {
@@ -113,7 +113,7 @@ pub fn MyList(comptime T: type) type {
         pub fn toArray(self: *Self) ![]T {
             // 仅转换有效长度范围内的列表元素
             var nums = try self.mem_allocator.alloc(T, self.size());
-           @memset(nums, @as(T, 0));
+            @memset(nums, @as(T, 0));
             for (nums, 0..) |*num, i| {
                 num.* = self.get(i);
             }
