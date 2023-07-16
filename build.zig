@@ -191,6 +191,10 @@ pub fn build(b: *std.Build) void {
         // Source File: "chapter_dynamic_programming/unbounded_knapsack.zig"
         // Run Command: zig build run_unbounded_knapsack -Doptimize=ReleaseFast
         .{ .name = "unbounded_knapsack", .path = "chapter_dynamic_programming/unbounded_knapsack.zig" },
+
+        // // Source File: "chapter_backtracking/n_queens.zig"
+        // // Run Command: zig build run_n_queens -Doptimize=ReleaseFast
+        // .{ .name = "n_queens", .path = "chapter_backtracking/n_queens.zig" },
     };
 
     inline for (group_name_path) |name_path| {
